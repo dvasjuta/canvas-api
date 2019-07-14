@@ -28,6 +28,10 @@ public class Section extends BaseCanvasModel implements Serializable {
     private Integer totalStudents;
     private Boolean restrictEnrollmentsToSectionDates;
 
+	// unimelb
+	private String shortName;
+	private String sortableName;
+
     public Long getId() {
         return id;
     }
@@ -136,4 +140,22 @@ public class Section extends BaseCanvasModel implements Serializable {
     public void setEnrollmentRole(String enrollmentRole) {
         this.enrollmentRole = enrollmentRole;
     }
+
+    @CanvasField(postKey = "short_name")
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
+    @CanvasField(postKey = "sortable_name")
+	public String getSortableName() {
+		return sortableName;
+	}
+
+	public void setSortableName(String sortableName) {
+		this.sortableName = sortableName;
+	}
 }
