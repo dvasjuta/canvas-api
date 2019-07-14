@@ -63,4 +63,16 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * @throws IOException if there is an error communicating with Canvas
       */
      Optional<Enrollment> dropUser(String courseId, String enrollmentId) throws IOException;
+
+     /**
+      * [DVASJUTA]
+      * Unenrollment a user enrolled in a section - UNDOCUMENTED API -- NOT TESTED
+      *
+      * @param courseId - Canvas course identifier
+      * @param enrollmentId enrollmentId - Canvas enrollment identifier
+      * @param unEnrollOption - UnEnrollOption enum value of delete, conclude, inactivate or deactivate
+      * @return Populated Enrollment Dropped when successful
+      * @throws IOException if there is an error communicating with Canvas
+      */
+	 Optional<Enrollment> unenrollFromSectionUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException;
 }

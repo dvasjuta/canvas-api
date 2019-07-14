@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
     public List<Enrollment> getSectionEnrollments(GetEnrollmentOptions options) throws IOException {
         LOG.debug("Retrieving section enrollments for section " + options.getObjectId());
         String url = buildCanvasUrl("sections/" + options.getObjectId() + "/enrollments", options.getOptionsMap());
-        return getListFromCanvas(url);
+            return getListFromCanvas(url);
     }
 
     @Override
@@ -98,6 +99,22 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         }
         return responseParser.parseToObject(Enrollment.class, response);
     }
+
+
+    @Override
+    public Optional<Enrollment> unenrollFromSectionUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException {
+        LOG.debug(String.format("Removing user enrollment %s from course section %s", enrollmentId, courseId));
+        Map<String, List<String>> postParams = new HashMap<>();
+        postParams.put("task", Collections.singletonList(unEnrollOption.toString()));
+        String url = buildCanvasUrl("courses/" + courseId + "/unenroll/" + enrollmentId, Collections.emptyMap());
+        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, postParams);
+        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
+            LOG.error("Failed to unenroll user from course section, error message: " + response.toString());
+            return Optional.empty();
+        }
+        return responseParser.parseToObject(Enrollment.class, response);
+    }
+
 
     private Optional<Enrollment> enrollUser(Enrollment enrollment, boolean isSectionEnrollment) throws IOException {
         String createdUrl = null;
