@@ -33,6 +33,11 @@
       <email>toby@ksu.edu</email>
       <organization>Kansas State University, Office of Mediated Education</organization>
     </developer>
+    <developer>
+      <name>David Vasjuta</name>
+      <email>dvasjuta</email>
+      <organization>University of Melbourne, Learning Environments</organization>
+    </developer>
   </developers>
 
   <scm>
@@ -273,17 +278,17 @@
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
-      <version>2.3</version>
+      <version>2.8.5</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.4</version>
+      <version>3.9</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>18.0</version>
+      <version>19.0</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
@@ -293,14 +298,14 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.2</version>
+      <version>4.5.8</version>
     </dependency>
 
     <!-- Everything below is for testing -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <version>4.5.6</version>
+      <version>4.5.8</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
@@ -313,19 +318,19 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>4.2.0.RELEASE</version>
+      <version>4.2.9.RELEASE</version>
       <scope>test</scope>
     </dependency>
       <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>4.2.0.RELEASE</version>
+      <version>4.2.9.RELEASE</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <version>4.2.0.RELEASE</version>
+      <version>4.2.9.RELEASE</version>
       <scope>test</scope>
     </dependency>
     <dependency>
