@@ -173,6 +173,11 @@ public class CanvasApiFactory {
         readerMap.put(AccountReportSummaryReader.class, AccountReportSummaryImpl.class);
         readerMap.put(AccountReportReader.class, AccountReportImpl.class);
         readerMap.put(ContentMigrationReader.class, ContentMigrationImpl.class);
+		//
+        readerMap.put(GroupReader.class, GroupImpl.class);
+        readerMap.put(GroupCategoryReader.class, GroupCategoryImpl.class);
+        readerMap.put(GroupMembershipReader.class, GroupMembershipImpl.class);
+        readerMap.put(UserIdReader.class, UserIdImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -188,7 +193,7 @@ public class CanvasApiFactory {
         writerMap.put(SectionWriter.class, SectionsImpl.class);
         writerMap.put(UserWriter.class, UserImpl.class);
         writerMap.put(PageWriter.class, PageImpl.class);
-        writerMap.put(SectionWriter.class, SectionsImpl.class);
+      //  writerMap.put(SectionWriter.class, SectionsImpl.class); // duplicate
         writerMap.put(SubmissionWriter.class, SubmissionImpl.class);
         writerMap.put(AssignmentGroupWriter.class, AssignmentGroupImpl.class);
         writerMap.put(RoleWriter.class, RoleImpl.class);
@@ -198,5 +203,10 @@ public class CanvasApiFactory {
         writerMap.put(AccountReportSummaryWriter.class, AccountReportSummaryImpl.class);
         writerMap.put(AccountReportWriter.class, AccountReportImpl.class);
         writerMap.put(ContentMigrationWriter.class, ContentMigrationImpl.class);
+				//
+        writerMap.put(GroupWriter.class, GroupImpl.class);
+        writerMap.put(GroupCategoryWriter.class, GroupCategoryImpl.class);
+        writerMap.put(GroupMembershipWriter.class, GroupMembershipImpl.class);
+        writerMap.put(UserIdWriter.class, UserIdImpl.class);
     }
 }
