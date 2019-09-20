@@ -26,6 +26,15 @@ public class GetUsersInCourseOptions extends BaseOptions {
         public String toString() { return name().toLowerCase(); }
     }
 
+	// TODO
+	/** Untested */
+	public enum SortByType {
+        USERNAME, LAST_LOGIN, EMAIL, SIS_ID;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+
     private String courseId;
 
     public GetUsersInCourseOptions(String courseId) {
@@ -105,4 +114,15 @@ public class GetUsersInCourseOptions extends BaseOptions {
         addEnumList("enrollment_state[]", enrollmentStates);
         return this;
     }
+
+	 /**
+     * Sorting parameter
+     * @param sortBy option to sort by
+     * @return This object to allow adding more options
+     */
+    public GetUsersInCourseOptions sort(SortByType sortBy) {
+        addSingleItem("sort", sortBy.toString());
+        return this;
+    }
+
 }
