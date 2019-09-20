@@ -17,12 +17,10 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements UserReader, UserWriter{
     private static final Logger LOG = Logger.getLogger(UserImpl.class);
@@ -72,7 +70,7 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
     public List<User> getUsersInCourse(GetUsersInCourseOptions options) throws IOException {
         LOG.debug("Retrieving users in course " + options.getCourseId());
         String url = buildCanvasUrl("courses/" + options.getCourseId() + "/users", options.getOptionsMap());
-
+        LOG.debug("Url being used: " + url);
         return getListFromCanvas(url);
     }
 
