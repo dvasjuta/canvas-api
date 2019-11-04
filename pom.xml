@@ -4,7 +4,7 @@
 
   <groupId>edu.ksu.canvas</groupId>
   <artifactId>canvas-api</artifactId>
-  <version>1.0.23-SNAPSHOT</version>
+  <version>1.0.24-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Canvas API Library</name>
@@ -33,7 +33,7 @@
       <email>toby@ksu.edu</email>
       <organization>Kansas State University, Office of Mediated Education</organization>
     </developer>
-	
+
     <developer>
       <name>David Vasjuta</name>
       <email>dvasjuta</email>
@@ -42,13 +42,13 @@
   </developers>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/kstateome/canvas-api.git</developerConnection>
-    <url>https://github.com/kstateome/canvas-api</url>
-    <tag>release-1.0</tag>
+    <connection>scm:git:ssh://git@github.com/dvasjuta/canvas-api.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/dvasjuta/canvas-api.git</developerConnection>
+    <url>https://github.com/dvasjuta/canvas-api</url>
+    <tag>1.0.24-SNAPSHOT</tag>
   </scm>
 
-  <distributionManagement>
+  <!-- distributionManagement>
     <repository>
       <id>ome-appdev-release</id>
       <url>https://artifactory.ome.k-state.edu/artifactory/ome-appdev-release</url>
@@ -61,7 +61,7 @@
       <id>canvas-api-site</id>
       <url>file:///var/www/maven-site/canvas-api</url>
     </site>
-  </distributionManagement>
+  </distributionManagement -->
 
   <build>
     <plugins>
