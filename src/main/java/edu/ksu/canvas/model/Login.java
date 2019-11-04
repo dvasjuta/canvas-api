@@ -21,6 +21,8 @@ public class Login extends BaseCanvasModel implements Serializable {
     private String authenticationProviderId;
     private String authenticationProviderType;
 
+	private String password;
+
     public String getId() {
         return id;
     }
@@ -89,4 +91,15 @@ public class Login extends BaseCanvasModel implements Serializable {
     public void setAuthenticationProviderType(String authenticationProviderType) {
         this.authenticationProviderType = authenticationProviderType;
     }
+
+    @CanvasField(postKey = "password")
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 }

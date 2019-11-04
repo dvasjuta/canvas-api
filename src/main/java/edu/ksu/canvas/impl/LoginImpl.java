@@ -35,6 +35,17 @@ public class LoginImpl extends BaseImpl<Login, LoginReader, LoginWriter> impleme
         return getListFromCanvas(url);
     }
 
+	@Override
+    public Optional<Login> createLogin(Login login) throws IOException {
+        LOG.debug(String.format("Creating login %s on account %s", login.getId(), login.getAccountId()));
+        if (StringUtils.isAnyBlank(login.getAccountId(), login.getId())) {
+            throw new IllegalArgumentException("Account ID and Login ID are required to create a login");
+        }
+        String url = buildCanvasUrl(String.format("accounts/%s/logins/%s", login.getAccountId(), login.getId()), emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, login.toJsonObject(serializeNulls));
+        return responseParser.parseToObject(Login.class, response);
+	}
+
     @Override
     public Optional<Login> updateLogin(Login login) throws IOException {
         LOG.debug(String.format("Updating login %s on account %s", login.getId(), login.getAccountId()));

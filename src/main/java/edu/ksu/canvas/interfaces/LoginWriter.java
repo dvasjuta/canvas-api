@@ -6,6 +6,13 @@ import java.util.Optional;
 import edu.ksu.canvas.model.Login;
 
 public interface LoginWriter extends CanvasWriter<Login, LoginWriter> {
+    /**
+     * Creates a login to Canvas.
+     * @param login The login to create. Must contain account ID and login ID.
+     * @return The login object if created was successful
+     * @throws IOException When there is an error communicating with Canvas
+     */
+    Optional<Login> createLogin(Login login) throws IOException;
 
     /**
      * Write changes to a login to Canvas.

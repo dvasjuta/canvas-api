@@ -127,15 +127,6 @@ public class User extends BaseCanvasModel implements Serializable {
         this.integrationId = integrationId;
     }
 
-    @CanvasField(postKey = "avatar][url")
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
     @CanvasField(postKey = "email")
     public String getEmail() {
         return email;
@@ -185,6 +176,15 @@ public class User extends BaseCanvasModel implements Serializable {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    @CanvasField(postKey = "avatar][url")
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     @Override
