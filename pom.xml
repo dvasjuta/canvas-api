@@ -45,7 +45,7 @@
     <connection>scm:git:ssh://git@github.com/dvasjuta/canvas-api.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/dvasjuta/canvas-api.git</developerConnection>
     <url>https://github.com/dvasjuta/canvas-api</url>
-    <tag>1.0.24-SNAPSHOT</tag>
+    <tag>release-1.0</tag>
   </scm>
 
   <!-- distributionManagement>
