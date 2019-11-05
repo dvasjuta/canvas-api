@@ -15,7 +15,7 @@ To use this library, you must be using Java 8. We are making extensive use of [J
 If you wish to contribute, you will need to be familiar with [Maven](https://maven.apache.org/) to build the project. [The Spring Framework](http://spring.io/) is also used but only for testing.
 
 ## Under Construction
-This code is currently under very active development. We are implementing API calls as we need them for K-State applications so a lot of calls are still missing. However the core functionality of talking to Canvas is well established so adding individual API calls is not a difficult task. Given the [number of API calls](https://canvas.instructure.com/doc/api/all_resources.html) that Canvas provides and the rate at which they add more and change others, we may never achieve 100% parity on all niche features. But basic operations on accounts, users and courses should be stable over time.
+This code is currently under very active development.
 
 ## Library structure
 The top level object needed to execute API calls is the `CanvasApiFactory` class which takes a Canvas instance URL to construct. From there you can request reader and writer objects which provide the functionality to actually execute calls to the Canvas API.
