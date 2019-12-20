@@ -28,4 +28,11 @@ public interface SectionReader extends CanvasReader<Section, SectionReader> {
      */
      Optional<Section> getSingleSection(String sectionId) throws IOException;
 
+    /**
+     * Return a single section with a given sis_section_id
+     * @param sisSectionId Section ID of section
+     * @return The section
+     * @throws IOException When there is an error communicating with Canvas
+     */
+	 Optional<Section> getSectionBySisSectionId(String sisSectionId) throws IOException;
 }
