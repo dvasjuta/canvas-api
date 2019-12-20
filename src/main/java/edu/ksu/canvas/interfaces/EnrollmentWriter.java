@@ -74,5 +74,5 @@ public interface EnrollmentWriter extends CanvasWriter<Enrollment, EnrollmentWri
       * @return Populated Enrollment Dropped when successful
       * @throws IOException if there is an error communicating with Canvas
       */
-	 Optional<Enrollment> unenrollFromSectionUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException;
+	 //private Optional<Enrollment> unenrollFromSectionUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException;
 }
