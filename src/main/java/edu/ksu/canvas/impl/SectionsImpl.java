@@ -53,6 +53,17 @@ public class SectionsImpl extends BaseImpl<Section, SectionReader, SectionWriter
         return responseParser.parseToObject(Section.class, response);
     }
 
+	@Override
+    public Optional<Section> getSectionBySisSectionId(String sisSectionId) throws IOException {
+        LOG.debug("getting section by sis_section_id: " + sisSectionId);
+//        String url = buildCanvasUrl("sections/sis_section_id:" + sisSectionId, new HashMap<>());
+        String url = buildCanvasUrl(String.format("/sections/sis_section_id:" + sisSectionId), new HashMap<>());
+        java.util.logging.Logger.getAnonymousLogger().info("getting section by sis_section_id: " + sisSectionId + "\n" + url);
+		
+        Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return responseParser.parseToObject(Section.class, response);
+    }
+
     @Override
     protected Type listType() {
         return new TypeToken<List<Section>>(){}.getType();
