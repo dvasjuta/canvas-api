@@ -124,7 +124,8 @@ public class SimpleRestClient implements RestClient {
         Long beginTime = System.currentTimeMillis();
         action.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
 
-        StringEntity requestBody = new StringEntity(json, ContentType.APPLICATION_JSON);
+//        StringEntity requestBody = new StringEntity(json, ContentType.APPLICATION_JSON);
+        StringEntity requestBody = new StringEntity(json, ContentType.APPLICATION_JSON.withCharset("UTF-8"));
         action.setEntity(requestBody);
         try {
             HttpResponse httpResponse = httpClient.execute(action);
@@ -153,7 +154,7 @@ public class SimpleRestClient implements RestClient {
         httpPost.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(postParameters);
 
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         HttpResponse httpResponse =  httpClient.execute(httpPost);
         String content = handleResponse(httpResponse, httpPost);
 
@@ -175,7 +176,7 @@ public class SimpleRestClient implements RestClient {
         httpPut.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(putParameters);
 
-        httpPut.setEntity(new UrlEncodedFormEntity(params));
+        httpPut.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         HttpResponse httpResponse =  httpClient.execute(httpPut);
         String content = handleResponse(httpResponse, httpPut);
 
@@ -210,7 +211,7 @@ public class SimpleRestClient implements RestClient {
         httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(deleteParameters);
 
-        httpDelete.setEntity(new UrlEncodedFormEntity(params));
+        httpDelete.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
 
         String content = handleResponse(httpResponse, httpDelete);
