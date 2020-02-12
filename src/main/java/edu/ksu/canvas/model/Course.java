@@ -59,6 +59,9 @@ public class Course extends BaseCanvasModel implements Serializable {
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
 
+	@SerializedName("account")
+    private Account account;
+
     public long getEnrollmentTermId() {
         return enrollmentTermId;
     }
@@ -399,4 +402,12 @@ public class Course extends BaseCanvasModel implements Serializable {
     public void setEnableSisReactivation(Boolean enableSisReactivation) {
         this.enableSisReactivation = enableSisReactivation;
     }
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}	
 }
