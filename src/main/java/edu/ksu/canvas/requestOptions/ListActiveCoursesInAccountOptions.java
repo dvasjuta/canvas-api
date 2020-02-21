@@ -30,7 +30,7 @@ public class ListActiveCoursesInAccountOptions extends BaseOptions {
     account object to the response JSON. However I don't know when this change will get rolled out to production
     and the old undocumented behavior will still work so I am leaving this as is for now (April 2018) */
     public enum Include {
-        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS, SUBACCOUNT;
+        SYLLABUS_BODY, TERM, COURSE_PROGRESS, STORAGE_QUOTA_USED_MB, TOTAL_STUDENTS, TEACHERS, SUBACCOUNT, CONCLUDED;
 
         @Override
         public String toString() { return name().toLowerCase(); }
