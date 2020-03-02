@@ -5,6 +5,7 @@ import edu.ksu.canvas.requestOptions.GetEnrollmentOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentReader> {
     /**
@@ -30,5 +31,13 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
       * @throws IOException When there is an error communicating with Canvas
       */
      List<Enrollment> getCourseEnrollments(GetEnrollmentOptions options) throws IOException;
-
+	 
+	/**
+     * Retrieve a user's enrollments. Object ID in the options class must be a enrollment ID.
+     * @param accountId account id where role resides
+     * @param options API options available to this call
+     * @return Enrollment if available
+     * @throws IOException When there is an error communicating with Canvas
+     */
+	public Optional<Enrollment> getEnrollment(Integer accountId, GetEnrollmentOptions options) throws IOException;
 }

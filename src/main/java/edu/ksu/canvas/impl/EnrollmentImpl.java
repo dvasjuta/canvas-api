@@ -1,5 +1,8 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import edu.ksu.canvas.interfaces.CourseReader;
@@ -53,6 +56,15 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         String url = buildCanvasUrl("courses/" + options.getObjectId() + "/enrollments", options.getOptionsMap());
         return getListFromCanvas(url);
     }
+	
+	@Override
+	public Optional<Enrollment> getEnrollment(Integer accountId, GetEnrollmentOptions options) throws IOException {
+        LOG.debug("Retrieving enrollment for accountId/id " + accountId + " " + options.getObjectId());
+		String url = buildCanvasUrl("accounts/" + accountId.toString() + "/enrollments/" + options.getObjectId(),options.getOptionsMap());
+		Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+		Optional<Enrollment> result = getFromCanvas(url);
+		return result;
+	}
 
     @Override
     @Deprecated
