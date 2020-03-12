@@ -39,5 +39,5 @@ public interface EnrollmentReader extends CanvasReader<Enrollment, EnrollmentRea
      * @return Enrollment if available
      * @throws IOException When there is an error communicating with Canvas
      */
-	public Optional<Enrollment> getEnrollment(Integer accountId, GetEnrollmentOptions options) throws IOException;
+	Optional<Enrollment> getEnrollment(Integer accountId, GetEnrollmentOptions options) throws IOException;
 }
