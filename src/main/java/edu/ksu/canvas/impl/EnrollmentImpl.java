@@ -112,21 +112,6 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
         return responseParser.parseToObject(Enrollment.class, response);
     }
 
-
-    /*public Optional<Enrollment> unenrollFromSectionUser(String courseId, String enrollmentId, UnEnrollOptions unEnrollOption) throws IOException {
-        LOG.debug(String.format("Removing user enrollment %s from course section %s", enrollmentId, courseId));
-        Map<String, List<String>> postParams = new HashMap<>();
-        postParams.put("task", Collections.singletonList(unEnrollOption.toString()));
-        String url = buildCanvasUrl("courses/" + courseId + "/unenroll/" + enrollmentId, Collections.emptyMap());
-        Response response = canvasMessenger.deleteFromCanvas(oauthToken, url, postParams);
-        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
-            LOG.error("Failed to unenroll user from course section, error message: " + response.toString());
-            return Optional.empty();
-        }
-        return responseParser.parseToObject(Enrollment.class, response);
-    }*/
-
-
     private Optional<Enrollment> enrollUser(Enrollment enrollment, boolean isSectionEnrollment) throws IOException {
         String createdUrl = null;
         if (isSectionEnrollment) {
@@ -141,6 +126,18 @@ public class EnrollmentImpl extends BaseImpl<Enrollment, EnrollmentReader, Enrol
             return Optional.empty();
         }
         return responseParser.parseToObject(Enrollment.class,response);
+    }
+	
+	@Override
+    public Optional<Enrollment> reactivateUser(String courseId, String enrollmentId) throws IOException {
+        LOG.debug(String.format("Reactivating enrollment %s from course %s", enrollmentId, courseId));
+        String url = buildCanvasUrl("courses/" + courseId + "/enrollments/" + enrollmentId + "/reactivate", Collections.emptyMap());
+        Response response = canvasMessenger.putToCanvas(oauthToken, url, Collections.emptyMap());
+        if (response.getErrorHappened() ||  response.getResponseCode() != 200) {
+            LOG.error("Failed to reactivate user from course/enrollment, error message: " + response.toString());
+            return Optional.empty();
+        }
+        return responseParser.parseToObject(Enrollment.class, response);
     }
 
     @Override
