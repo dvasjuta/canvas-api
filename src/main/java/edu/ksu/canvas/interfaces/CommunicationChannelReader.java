@@ -17,5 +17,5 @@ public interface CommunicationChannelReader  extends CanvasReader<CommunicationC
      * @return List of communication channels for user.
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<CommunicationChannel> listCustomGradebookColumns(int userId) throws IOException;
+    List<CommunicationChannel> listUserCommunicationChannels(int userId) throws IOException;
 }

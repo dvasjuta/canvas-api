@@ -48,7 +48,7 @@ public class CommunicationChannelImpl extends BaseImpl<CommunicationChannel, Com
 
     
     @Override
-    public List<CommunicationChannel> listCustomGradebookColumns(int userId) throws IOException {
+    public List<CommunicationChannel> listUserCommunicationChannels(int userId) throws IOException {
         LOG.debug("Looking up communication channels for user " + userId);
         String url = buildCanvasUrl(String.format("users/%s//communication_channels", userId), Collections.emptyMap());
         return getListFromCanvas(url);
