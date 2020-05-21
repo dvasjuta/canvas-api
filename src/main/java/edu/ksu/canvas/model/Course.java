@@ -7,6 +7,7 @@ import edu.ksu.canvas.annotation.CanvasObject;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class to represent Canvas courses.
@@ -56,6 +57,7 @@ public class Course extends BaseCanvasModel implements Serializable {
     private List<Section> sections;
     private List<Enrollment> enrollments;
     private List<UserDisplay> teachers;
+    private Map<String, Object> permissions;
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
@@ -404,19 +406,27 @@ public class Course extends BaseCanvasModel implements Serializable {
         this.enableSisReactivation = enableSisReactivation;
     }
 
-	public Account getAccount() {
-		return account;
-	}
+    public Account getAccount() {
+        return account;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}	
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	public Boolean getConcluded() {
-		return concluded;
-	}
+    public Boolean getConcluded() {
+        return concluded;
+    }
 
-	public void setConcluded(Boolean concluded) {
-		this.concluded = concluded;
-	}
+    public void setConcluded(Boolean concluded) {
+        this.concluded = concluded;
+    }
+
+    public Map<String, Object> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Map<String, Object> permissions) {
+        this.permissions = permissions;
+    }
 }
