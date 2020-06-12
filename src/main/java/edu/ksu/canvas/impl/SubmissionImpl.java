@@ -60,7 +60,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
+    public List<Submission> listCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
         if (options.getObjectId() == null || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Required CourseId/AssignmentId not found.");
         }
@@ -70,7 +70,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
     }
 
     @Override
-    public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
+    public List<Submission> listSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
         if(options.getObjectId() == null || options.getAssignmentId() == null) {
             throw new IllegalArgumentException("Required SectionId/AssignmentId not found.");
         }

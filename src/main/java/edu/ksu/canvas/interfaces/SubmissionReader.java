@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface SubmissionReader  extends CanvasReader<Submission, SubmissionReader> {
+public interface SubmissionReader extends CanvasReader<Submission, SubmissionReader> {
 
     /**
      * Retrieve a list of assignment submissions from a course.
@@ -16,7 +16,7 @@ public interface SubmissionReader  extends CanvasReader<Submission, SubmissionRe
      * @return List of assignment submissions in the course with the course ID
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Submission> getCourseSubmissions(GetSubmissionsOptions options) throws IOException;
+    List<Submission> listCourseSubmissions(GetSubmissionsOptions options) throws IOException;
 
     /**
      * Retrieve a list of assignment submissions from a section
@@ -25,7 +25,7 @@ public interface SubmissionReader  extends CanvasReader<Submission, SubmissionRe
      * @return List of assignment submissions in the section with the section ID
      * @throws IOException When there is an error communicating with Canvas
      */
-    List<Submission> getSectionSubmissions(GetSubmissionsOptions options) throws IOException;
+    List<Submission> listSectionSubmissions(GetSubmissionsOptions options) throws IOException;
 
     /**
      * Retrieve a single assignment submission from a course
