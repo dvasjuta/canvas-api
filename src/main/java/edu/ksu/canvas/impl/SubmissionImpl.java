@@ -11,6 +11,7 @@ import edu.ksu.canvas.model.assignment.Submission;
 import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
+import edu.ksu.canvas.requestOptions.GetSubmissionsOptions;
 import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
@@ -58,6 +59,61 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
         return gradeMultipleSubmissions(options, url);
     }
 
+    @Override
+    public List<Submission> getCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
+        if (options.getObjectId() == null || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Required CourseId/AssignmentId not found.");
+        }
+        LOG.debug(String.format("Listing assignment submissions for course %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
+        final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
+    public List<Submission> getSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
+        if(options.getObjectId() == null || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Required SectionId/AssignmentId not found.");
+        }
+        LOG.debug(String.format("Listing assignment submissions for section %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
+        final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
+        return getListFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Submission> getSingleCourseSubmission(final GetSubmissionsOptions options) throws IOException {
+        if(options.getObjectId()== null || options.getUserId()== null || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Required CourseId/AssignmentId/UserId not found.");
+        }
+        LOG.debug(String.format("Getting submission for course %s, assignment %d, user %s", options.getObjectId(), options.getAssignmentId(), options.getUserId()));
+        final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions/%s", options.getObjectId(), options.getAssignmentId(), options.getUserId()), options.getOptionsMap());
+        return getFromCanvas(url);
+    }
+
+    @Override
+    public Optional<Submission> getSingleSectionSubmission(final GetSubmissionsOptions options) throws IOException {
+        if(options.getObjectId() == null || options.getUserId() == null || options.getAssignmentId() == null) {
+            throw new IllegalArgumentException("Required SectionId/AssignmentId/UserId not found.");
+        }
+        LOG.debug(String.format("Getting submission for section %s, assignment %d, user %s", options.getObjectId(), options.getAssignmentId(), options.getUserId()));
+        final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions/%s", options.getObjectId(), options.getAssignmentId(), options.getUserId()), options.getOptionsMap());
+        return getFromCanvas(url);
+    }
+
+
+    private Progress parseProgressResponse(final Response response) {
+        return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
+    }	
+
+    @Override
+    protected Type listType() {
+        return new TypeToken<List<Submission>>(){}.getType();
+    }
+
+    @Override
+    protected Class<Submission> objectType() {
+        return Submission.class;
+    }
+	
     private Optional<Progress> gradeMultipleSubmissions(MultipleSubmissionsOptions options, String url) throws IOException {
         Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject jsonObject = new JsonObject();
@@ -73,16 +129,5 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 
     private Progress parseSubmissionResponse(final Response response) {
         return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
-    }
-
-    @Override
-    protected Type listType() {
-        return new TypeToken<List<Submission>>(){}.getType();
-    }
-
-    @Override
-    protected Class<Submission> objectType() {
-        return Submission.class;
-    }
-
+    }	
 }
