@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GetSubmissionsOptions extends BaseOptions {
 
-    private Integer objectId;
+    private Long objectId;
     private Integer userId;
     private Integer assignmentId;
 
@@ -22,6 +22,7 @@ public class GetSubmissionsOptions extends BaseOptions {
         @Override
         public String toString() { return name().toLowerCase(); }
     }
+
 	
 	public enum WorkflowState{
         SUBMITTED, UNSUBMITTED, GRADED, PENDING_REVIEW;
@@ -34,7 +35,7 @@ public class GetSubmissionsOptions extends BaseOptions {
      * Construct options class with required parameters to retrieve a list of Submissions from courses or sections
      * @param objectId Required: ID of the course or subject to query.
      */
-    public GetSubmissionsOptions(Integer objectId) {
+    public GetSubmissionsOptions(Long objectId) {
         this.objectId = objectId;
     }
 
@@ -43,7 +44,7 @@ public class GetSubmissionsOptions extends BaseOptions {
      * @param objectId Required: ID of the course or subject to query.
      * @param assignmentId The Canvas ID of the assignment to query for submissions
      */
-    public GetSubmissionsOptions(Integer objectId, Integer assignmentId) {
+    public GetSubmissionsOptions(Long objectId, Integer assignmentId) {
         this.objectId = objectId;
         this.assignmentId = assignmentId;
     }
@@ -95,8 +96,8 @@ public class GetSubmissionsOptions extends BaseOptions {
      * @param enrollmentStates List of enrollment states to filter submissions by
      * @return This object to allow adding more options
      */
-    public GetSubmissionsOptions enrollmentState(List<EnrollmentState> enrollmentStates) {
-        addEnumList("enrollment_state[]", enrollmentStates);
+    public GetSubmissionsOptions enrollmentState(EnrollmentState enrollmentStates) {
+        addSingleItem("enrollment_state", enrollmentStates.toString());
         return this;
     }
 	
@@ -110,11 +111,11 @@ public class GetSubmissionsOptions extends BaseOptions {
         return this;
     }
 	
-	public Integer getObjectId() {
+	public Long getObjectId() {
 		return objectId;
 	}
 
-	public void setObjectId(Integer objectId) {
+	public void setObjectId(Long objectId) {
 		this.objectId = objectId;
 	}
 
