@@ -15,6 +15,28 @@ public class GetSubmissionsOptions extends BaseOptions {
             return name().toLowerCase();
         }
     }
+	
+	public enum EnrollmentState{
+        ACTIVE, CONCLUDED;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+	
+	public enum WorkflowState{
+        SUBMITTED, UNSUBMITTED, GRADED, PENDING_REVIEW;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+	
+	/**
+     * Construct options class with required parameters to retrieve a list of Submissions from courses or sections
+     * @param objectId Required: ID of the course or subject to query.
+     */
+    public GetSubmissionsOptions(Integer objectId) {
+        this.objectId = objectId;
+    }
 
     /**
      * Construct options class with required parameters to retrieve a list of Submissions from courses or sections
@@ -59,6 +81,35 @@ public class GetSubmissionsOptions extends BaseOptions {
         return this;
     }
 
+    /**
+     * Uses special "student_ids[]=all" when listing all submissions
+     * @return This object to allow adding more options
+     */
+    public GetSubmissionsOptions studentIdsAll() {
+        addSingleItem("student_ids[]", "all");
+        return this;
+    }
+
+    /**
+     * Filter users by enrollment state
+     * @param enrollmentStates List of enrollment states to filter submissions by
+     * @return This object to allow adding more options
+     */
+    public GetSubmissionsOptions enrollmentState(List<EnrollmentState> enrollmentStates) {
+        addEnumList("enrollment_state[]", enrollmentStates);
+        return this;
+    }
+	
+	 /**
+     * Filter users by enrollment state
+     * @param workflowStates List of worlflow states to filter submissions by
+     * @return This object to allow adding more options
+     */
+    public GetSubmissionsOptions workflowState(List<WorkflowState> workflowStates) {
+        addEnumList("workflow_state[]", workflowStates);
+        return this;
+    }
+	
 	public Integer getObjectId() {
 		return objectId;
 	}
