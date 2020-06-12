@@ -61,23 +61,35 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 
     @Override
     public List<Submission> listCourseSubmissions(final GetSubmissionsOptions options) throws IOException {
-        if (options.getObjectId() == null || options.getAssignmentId() == null) {
-            throw new IllegalArgumentException("Required CourseId/AssignmentId not found.");
+        if (options.getObjectId() == null) {
+            throw new IllegalArgumentException("Required courseId/objectId not found.");
         }
-        LOG.debug(String.format("Listing assignment submissions for course %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
-        final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
-        return getListFromCanvas(url);
+		if (options.getAssignmentId() != null) {
+			LOG.debug(String.format("Listing assignment submissions for course %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
+			final String url = buildCanvasUrl(String.format("courses/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
+			return getListFromCanvas(url);
+		}
+		LOG.debug(String.format("Listing assignment submissions for all students in course %s", options.getObjectId()));
+		final String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getObjectId()), options.getOptionsMap());
+		return getListFromCanvas(url);
+		
     }
 
     @Override
     public List<Submission> listSectionSubmissions(final GetSubmissionsOptions options) throws IOException {
-        if(options.getObjectId() == null || options.getAssignmentId() == null) {
-            throw new IllegalArgumentException("Required SectionId/AssignmentId not found.");
+        if (options.getObjectId() == null) {
+            throw new IllegalArgumentException("Required sectionId/objectId not found.");
         }
-        LOG.debug(String.format("Listing assignment submissions for section %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
-        final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
-        return getListFromCanvas(url);
-    }
+		if (options.getAssignmentId() != null) {
+			LOG.debug(String.format("Listing assignment submissions for section %s, assignment %d", options.getObjectId(), options.getAssignmentId()));
+			final String url = buildCanvasUrl(String.format("sections/%s/assignments/%d/submissions", options.getObjectId(), options.getAssignmentId()), options.getOptionsMap());
+			return getListFromCanvas(url);
+		}
+		LOG.debug(String.format("Listing assignment submissions for all students in section %s", options.getObjectId()));
+		final String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getObjectId()), options.getOptionsMap());
+		return getListFromCanvas(url);
+	}
+		
 
     @Override
     public Optional<Submission> getSingleCourseSubmission(final GetSubmissionsOptions options) throws IOException {
