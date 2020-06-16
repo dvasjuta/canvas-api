@@ -1,11 +1,13 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.Account;
+import edu.ksu.canvas.model.Role;
 import edu.ksu.canvas.requestOptions.GetSubAccountsOptions;
 import edu.ksu.canvas.requestOptions.ListAccountOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -43,4 +45,11 @@ public interface AccountReader extends CanvasReader<Account, AccountReader> {
      * @throws IOException When there is an error communicating with Canvas
      */
     List<Account> listAccountsForCourseAdmins() throws IOException;
+
+	/**
+	 * Call this as another user
+	 * @return
+     * @throws IOException When there is an error communicating with Canvas
+	 */
+    Map<String, Boolean> listMyPermissions() throws IOException;
 }
