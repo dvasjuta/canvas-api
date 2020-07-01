@@ -86,7 +86,7 @@ public class SubmissionImpl extends BaseImpl<Submission, SubmissionReader, Submi
 			return getListFromCanvas(url);
 		}
 		LOG.debug(String.format("Listing assignment submissions for all students in section %s", options.getObjectId()));
-		final String url = buildCanvasUrl(String.format("courses/%s/students/submissions", options.getObjectId()), options.getOptionsMap());
+		final String url = buildCanvasUrl(String.format("sections/%s/students/submissions", options.getObjectId()), options.getOptionsMap());
 		return getListFromCanvas(url);
 	}
 		
