@@ -43,7 +43,7 @@ public interface GroupMembershipWriter extends CanvasWriter<GroupMembership, Gro
 	 */
 	boolean dropGroupMembership(String groupMembershipId, String groupId) throws IOException;
 
-	/**
+	/*
 	 *
 	 * Drop a user group membership in a group // using the Unenrollment option
 	 * of DELETE.
