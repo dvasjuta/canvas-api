@@ -15,7 +15,7 @@ public class CustomGradebookColumn extends BaseCanvasModel implements Serializab
     public static final long serialVersionUID = 1L;
 
 
-    private String id;
+    private Integer id;
     private Integer courseId;
     private Integer position;
     private String title;
@@ -23,11 +23,11 @@ public class CustomGradebookColumn extends BaseCanvasModel implements Serializab
     private boolean readOnly;
     private String teacherNotes;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
