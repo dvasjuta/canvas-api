@@ -6,6 +6,8 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.CustomGradebookColumnDataReader;
@@ -71,4 +73,36 @@ public class CustomGradebookColumnDataImpl extends BaseImpl<CustomGradebookColum
         Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, columnData.toJsonObject(serializeNulls));
         return responseParser.parseToObject(CustomGradebookColumnData.class, response);
 	}
+	
+	@Override
+	public boolean updateCustomGradebookColumnData(int courseId, List<CustomGradebookColumnData> columnData, boolean allowDeletion) throws IOException {
+        LOG.debug("updating course " + courseId + " custom_gradebook_column_data " + (columnData != null ? columnData.size(): "delete all data"));
+        if (!allowDeletion && (columnData == null || columnData.isEmpty())) {
+            throw new IllegalArgumentException("Deletion of column data not allowed (allowDeletion is false and content is null/empty)");
+        }
+        String url = buildCanvasUrl("courses/" + courseId + "/custom_gradebook_column_data", Collections.emptyMap());
+		Response response = null;
+		if (allowDeletion && (columnData == null || columnData.isEmpty())) {
+	        response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, new JsonObject());
+		} else {
+			JsonObject column_data = new JsonObject();
+			JsonArray array = new JsonArray();
+			for (CustomGradebookColumnData data : columnData) {
+			//	JsonObject object = data.toJsonObject(Boolean.FALSE);
+				JsonObject transposed = new JsonObject();
+				transposed.addProperty("user_id",  data.getUserId()); // //object.get("user_id").getAsBigInteger() );
+				transposed.addProperty("column_id", data.getColumnId()); // object.get("column_id").getAsBigInteger() );
+				transposed.addProperty("content", data.getContent()); // object.get("content").getAsString() );
+				array.add(transposed);
+			}
+			column_data.add("column_data",  array); //.getAsJsonArray());
+	        response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, column_data); //.toJsonObject(serializeNulls));
+		}			
+        if (response.getErrorHappened() || response.getResponseCode() != 200) {
+            LOG.debug("Failed to update custom_gradebook_column data, error message: " + response.toString());
+            return false;
+        }
+		return true;
+	}
+
 }
