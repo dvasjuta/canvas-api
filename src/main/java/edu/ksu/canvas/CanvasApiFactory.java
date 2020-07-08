@@ -180,6 +180,7 @@ public class CanvasApiFactory {
         readerMap.put(UserIdReader.class, UserIdImpl.class);
         readerMap.put(CustomGradebookColumnReader.class, CustomGradebookColumnImpl.class);
         readerMap.put(CommunicationChannelReader.class, CommunicationChannelImpl.class);
+        readerMap.put(CustomGradebookColumnDataReader.class, CustomGradebookColumnDataImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -212,5 +213,6 @@ public class CanvasApiFactory {
         writerMap.put(UserIdWriter.class, UserIdImpl.class);
         writerMap.put(CustomGradebookColumnWriter.class, CustomGradebookColumnImpl.class);
         writerMap.put(CommunicationChannelWriter.class, CommunicationChannelImpl.class);
+        writerMap.put(CustomGradebookColumnDataWriter.class, CustomGradebookColumnDataImpl.class);
     }
 }
