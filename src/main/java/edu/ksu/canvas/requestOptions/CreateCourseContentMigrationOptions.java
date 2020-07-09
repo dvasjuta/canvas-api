@@ -1,5 +1,7 @@
 package edu.ksu.canvas.requestOptions;
 
+import java.util.List;
+
 public class CreateCourseContentMigrationOptions extends BaseOptions {
 
     public enum MigrationType {
@@ -11,6 +13,12 @@ public class CreateCourseContentMigrationOptions extends BaseOptions {
         @Override
         public String toString() { return name().toLowerCase(); }
 
+    }
+    public enum Select {
+        FOLDERS, FILES, ATTACHMENTS, QUIZZES, ASSIGNMENTS, ANNOUNCEMENTS, CALENDAR_EVENTS, DISCUSSION_TOPICS, MODULES, MODULE_ITEMS, PAGES, RUBRICS;
+
+        @Override
+        public String toString() { return name().toLowerCase(); }
     }
 
     private final String destinationCourseId;
@@ -38,4 +46,15 @@ public class CreateCourseContentMigrationOptions extends BaseOptions {
     public MigrationType getMigrationType() {
         return migrationType;
     }
+
+    /**
+     * If set, only the selected types will be included in the migration.
+     * @param selectTypes List of migration types to include
+     * @return This object to allow adding more options
+     */
+    public CreateCourseContentMigrationOptions withSelect(List<Select> selectTypes) {
+        addEnumList("select[]", selectTypes);
+        return this;
+    }
+
 }
