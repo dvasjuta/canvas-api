@@ -59,19 +59,24 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 		LOG.debug("get course content migration progress id = " + progressId);
         String url = buildCanvasUrl("progress/" + (progressId != null ? progressId : -1), Collections.emptyMap());
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
-		Progress progress = parseSubmissionResponse(response);
+		Progress progress = parseProgressResponse(response);
         return Optional.of(progress);
     } 
 	
 	@Override
     public Optional<Progress> getProgress(String progressUrl) throws IOException {
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, progressUrl);
-		Progress progress = parseSubmissionResponse(response);
+		Progress progress = parseProgressResponse(response);
         LOG.debug("ProgressId from contentMigration: " + (progress != null ? progress.getId() : -1));
         return Optional.of(progress);
     }
 
-    private Progress parseSubmissionResponse(final Response response) {
+	/**
+	 * 
+	 * @param response
+	 * @return 
+	 */
+    private Progress parseProgressResponse(final Response response) {
         return GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), Progress.class);
     }
 }
