@@ -1,6 +1,7 @@
 package edu.ksu.canvas.interfaces;
 
 import edu.ksu.canvas.model.ContentMigration;
+import edu.ksu.canvas.model.Progress;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -13,4 +14,20 @@ public interface ContentMigrationReader extends CanvasReader<ContentMigration, C
      * @throws IOException When there is an error communicating with Canvas
      */
     Optional<ContentMigration> getCourseContentMigration(String courseId, Integer id) throws IOException;
+	
+	/**
+	 * 
+	 * @param progressId
+	 * @return
+	 * @throws IOException 
+	 */
+	Optional<Progress> getProgress(Long progressId) throws IOException;
+	
+	/**
+	 * 
+	 * @param progressUrl
+	 * @return
+	 * @throws IOException 
+	 */
+	Optional<Progress> getProgress(String progressUrl) throws IOException;
 }

@@ -1,5 +1,6 @@
 package edu.ksu.canvas.model;
 
+import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
 
 import java.io.Serializable;
@@ -42,6 +43,7 @@ public class Progress implements Serializable {
         this.id = id;
     }
 
+    @CanvasField(postKey = "context_id")
     public Integer getContextId() {
         return contextId;
     }
@@ -50,6 +52,7 @@ public class Progress implements Serializable {
         this.contextId = contextId;
     }
 
+    @CanvasField(postKey = "context_type")
     public String getContextType() {
         return contextType;
     }
@@ -58,6 +61,7 @@ public class Progress implements Serializable {
         this.contextType = contextType;
     }
 
+    @CanvasField(postKey = "user_id")
     public Integer getUserId() {
         return userId;
     }
@@ -66,6 +70,7 @@ public class Progress implements Serializable {
         this.userId = userId;
     }
 
+    @CanvasField(postKey = "tag")
     public String getTag() {
         return tag;
     }
@@ -74,6 +79,7 @@ public class Progress implements Serializable {
         this.tag = tag;
     }
 
+    @CanvasField(postKey = "completion")
     public Integer getCompletion() {
         return completion;
     }
@@ -82,6 +88,7 @@ public class Progress implements Serializable {
         this.completion = completion;
     }
 
+    @CanvasField(postKey = "workflow_state")
     public String getWorkflowState() {
         return workflowState;
     }
@@ -90,6 +97,7 @@ public class Progress implements Serializable {
         this.workflowState = workflowState;
     }
 
+    @CanvasField(postKey = "updated_at")
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -98,6 +106,7 @@ public class Progress implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    @CanvasField(postKey = "created_at")
     public Date getCreatedAt() {
         return createdAt;
     }
