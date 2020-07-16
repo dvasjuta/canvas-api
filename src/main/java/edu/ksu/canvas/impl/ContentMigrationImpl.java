@@ -1,7 +1,5 @@
 package edu.ksu.canvas.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.ContentMigrationReader;
 import edu.ksu.canvas.interfaces.ContentMigrationWriter;
@@ -12,7 +10,6 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.CreateCourseContentMigrationOptions;
-import edu.ksu.canvas.requestOptions.MultipleSubmissionsOptions;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -61,8 +58,6 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     public Optional<Progress> getProgress(Long progressId) throws IOException {
 		LOG.debug("get course content migration progress id = " + progressId);
         String url = buildCanvasUrl("progress/" + (progressId != null ? progressId : -1), Collections.emptyMap());
-		Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
-        JsonObject jsonObject = new JsonObject();
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
 		Progress progress = parseSubmissionResponse(response);
         return Optional.of(progress);
@@ -70,8 +65,6 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 	
 	@Override
     public Optional<Progress> getProgress(String progressUrl) throws IOException {
-        Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
-        JsonObject jsonObject = new JsonObject();
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, progressUrl);
 		Progress progress = parseSubmissionResponse(response);
         LOG.debug("ProgressId from contentMigration: " + progress.getId());
