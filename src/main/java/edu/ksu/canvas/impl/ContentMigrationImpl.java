@@ -67,7 +67,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
     public Optional<Progress> getProgress(String progressUrl) throws IOException {
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, progressUrl);
 		Progress progress = parseSubmissionResponse(response);
-        LOG.debug("ProgressId from contentMigration: " + progress.getId());
+        LOG.debug("ProgressId from contentMigration: " + (progress != null ? progress.getId() : -1));
         return Optional.of(progress);
     }
 
