@@ -57,4 +57,13 @@ public class CreateCourseContentMigrationOptions extends BaseOptions {
         return this;
     }
 
+    /**
+     * If set, perform a selective import instead of importing all content.
+     * @param selectiveImport if selective import should be used
+     * @return This object to allow adding more options
+     */
+	public CreateCourseContentMigrationOptions selectiveImport(Boolean selectiveImport) {
+        addSingleItem("selective_import", String.valueOf(selectiveImport));
+        return this;
+    }
 }
