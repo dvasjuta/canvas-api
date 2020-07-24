@@ -9,6 +9,13 @@ import java.util.Optional;
 
 public interface ContentMigrationWriter extends CanvasWriter<ContentMigration, ContentMigrationWriter>{
 
-    Optional<ContentMigration> createCourseContentMigration(CreateCourseContentMigrationOptions options) throws IOException;
-
+	/**
+	 * 
+	 * @param destinationCourseId
+	 * @param contentMigration
+	 * @param options configure select[] values
+	 * @return
+	 * @throws IOException 
+	 */
+    Optional<ContentMigration> createCourseContentMigration(int destinationCourseId, ContentMigration contentMigration, CreateCourseContentMigrationOptions options) throws IOException;
 }

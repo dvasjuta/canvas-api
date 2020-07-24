@@ -1,73 +1,82 @@
 package edu.ksu.canvas.model;
 
+import com.google.gson.annotations.SerializedName;
 import edu.ksu.canvas.annotation.CanvasField;
 import edu.ksu.canvas.annotation.CanvasObject;
+import java.beans.Transient;
 
 import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import org.apache.commons.lang3.StringUtils;
 
 @CanvasObject(postKey = "content_migration")
 public class ContentMigration extends BaseCanvasModel implements Serializable {
-    private Integer id;
-    private String migrationType;
-    private String name;
-    private String workflowState;
-    private Integer userId;
-    private String migrationIssuesUrl;
-    private Integer migrationIssuesCount;
-    private String progressUrl;
-    private Date startedAt;
-    private Date finishedAt;
 
-    @CanvasField(postKey = "id")
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	private Integer id;
+	private String migrationType;
+	private String name;
+	private String workflowState;
+	private Integer userId;
+	private String migrationIssuesUrl;
+	private Integer migrationIssuesCount;
+	private String progressUrl;
+	private Date startedAt;
+	private Date finishedAt;
+	private Boolean selectiveImport;
+	private Map<String, Object> settings;
 	
-    @CanvasField(postKey = "migration_type")
-    public String getMigrationType() {
-        return migrationType;
-    }
 
-    public void setMigrationType(String migrationType) {
-        this.migrationType = migrationType;
-    }
+	@CanvasField(postKey = "id")
+	public Integer getId() {
+		return id;
+	}
 
-    @CanvasField(postKey = "name")
-    public String getName() {
-        return name;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@CanvasField(postKey = "migration_type")
+	public String getMigrationType() {
+		return migrationType;
+	}
 
-    @CanvasField(postKey = "workflow_state")
-    public String getWorksflowState() {
-        return workflowState;
-    }
+	public void setMigrationType(String migrationType) {
+		this.migrationType = migrationType;
+	}
 
-    public void setWorksflowState(String workflowState) {
-        this.workflowState = workflowState;
-    }
-	
-    @CanvasField(postKey = "user_id")
-    public Integer getUserId() {
-        return userId;
-    }
+	@CanvasField(postKey = "name")
+	public String getName() {
+		return name;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }	
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @CanvasField(postKey = "migration_issues_url")
+	@CanvasField(postKey = "workflow_state")
+	public String getWorkflowState() {
+		return workflowState;
+	}
+
+	public void setWorkflowState(String workflowState) {
+		this.workflowState = workflowState;
+	}
+
+	@CanvasField(postKey = "user_id")
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	@CanvasField(postKey = "migration_issues_url")
 	public String getMigrationIssuesUrl() {
 		return migrationIssuesUrl;
 	}
@@ -76,7 +85,7 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
 		this.migrationIssuesUrl = migrationIssuesUrl;
 	}
 
-    @CanvasField(postKey = "migration_issues_count")
+	@CanvasField(postKey = "migration_issues_count")
 	public Integer getMigrationIssuesCount() {
 		return migrationIssuesCount;
 	}
@@ -85,16 +94,16 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
 		this.migrationIssuesCount = migrationIssuesCount;
 	}
 
-    @CanvasField(postKey = "progress_url")
+	@CanvasField(postKey = "progress_url")
 	public String getProgressUrl() {
 		return progressUrl;
 	}
 
 	public void setProgressUrl(String progressUrl) {
 		this.progressUrl = progressUrl;
-	}	
+	}
 
-    @CanvasField(postKey = "started_at")
+	@CanvasField(postKey = "started_at")
 	public Date getStartedAt() {
 		return startedAt;
 	}
@@ -103,7 +112,7 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
 		this.startedAt = startedAt;
 	}
 
-    @CanvasField(postKey = "finished_at")
+	@CanvasField(postKey = "finished_at")
 	public Date getFinishedAt() {
 		return finishedAt;
 	}
@@ -111,9 +120,43 @@ public class ContentMigration extends BaseCanvasModel implements Serializable {
 	public void setFinishedAt(Date finishedAt) {
 		this.finishedAt = finishedAt;
 	}
-	
+
+	public Map<String, Object> getSettings() {
+		return settings;
+	}
+
+	public void setSettings(Map<String, Object> settings) {
+		this.settings = settings;
+	}
+
+	@Transient
+	public void setSourceCourseIdSetting(int source_course_id) {
+		if (getSettings() == null) {
+			settings = new TreeMap<>();
+		}
+		settings.put("source_course_id", source_course_id);
+	}
+
+	@CanvasField(postKey = "selective_import")
+	public Boolean getSelectiveImport() {
+		return selectiveImport;
+	}
+
+	public void setSelectiveImport(Boolean selectiveImport) {
+		this.selectiveImport = selectiveImport;
+	}
+
+
+	/*public List<Select> getTypes() {
+		return types;
+	}
+
+	public void setTypes(List<Select> types) {
+		this.types = types;
+	}*/
+
 	/**
-	 * 
+	 *
 	 * @return id from progressUrl (null if not available)
 	 */
 	public Long getProgressId() {

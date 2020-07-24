@@ -1,10 +1,11 @@
 package edu.ksu.canvas.requestOptions;
 
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class CreateCourseContentMigrationOptions extends BaseOptions {
 
-    public enum MigrationType {
+    /*public enum MigrationType {
         course_copy_importer;
         // Only allow course copy for now.
         //CANVAS_CARTRIDGE_IMPORTER, COMMON_CARTRIDGE_IMPORTER,
@@ -13,29 +14,56 @@ public class CreateCourseContentMigrationOptions extends BaseOptions {
         @Override
         public String toString() { return name().toLowerCase(); }
 
-    }
-    public enum Select {
-        FOLDERS, FILES, ATTACHMENTS, QUIZZES, ASSIGNMENTS, ANNOUNCEMENTS, CALENDAR_EVENTS, DISCUSSION_TOPICS, MODULES, MODULE_ITEMS, PAGES, RUBRICS;
+    }*/
 
-        @Override
-        public String toString() { return name().toLowerCase(); }
-    }
+	public enum Select {
+		@SerializedName("folders")
+		FOLDERS,
+		@SerializedName("files")
+		FILES,
+		@SerializedName("attachments")
+		ATTACHMENTS,
+		@SerializedName("quizzes")
+		QUIZZES,
+		@SerializedName("assignments")
+		ASSIGNMENTS,
+		@SerializedName("announcements")
+		ANNOUNCEMENTS,
+		@SerializedName("calendar_events")
+		CALENDAR_EVENTS,
+		@SerializedName("discussion_topics")
+		DISCUSSION_TOPICS,
+		@SerializedName("modules")
+		MODULES,
+		@SerializedName("module_items")
+		MODULE_ITEMS,
+		@SerializedName("pages")
+		PAGES,
+		@SerializedName("rubrics")
+		RUBRICS;
 
-    private final String destinationCourseId;
+		@Override
+		public String toString() {
+			return name().toLowerCase();
+		}
+	}
 
-    private final String sourceCourseId;
+    //private final String destinationCourseId;
 
-    private final MigrationType migrationType;
+    //private final String sourceCourseId;
+
+    //private final MigrationType migrationType;
     
-    public CreateCourseContentMigrationOptions(String destinationCourseId, String sourceCourseId, MigrationType migrationType) {
+	public CreateCourseContentMigrationOptions() { }
+	/*public CreateCourseContentMigrationOptions(String destinationCourseId, String sourceCourseId, MigrationType migrationType) {
         this.destinationCourseId = destinationCourseId;
         this.sourceCourseId = sourceCourseId;
         this.migrationType = migrationType;
         addSingleItem("settings[source_course_id]", sourceCourseId);
         addSingleItem("migration_type", migrationType.toString().toLowerCase());
-    }
+    }*/
 
-    public String getDestinationCourseId() {
+    /*public String getDestinationCourseId() {
         return destinationCourseId;
     }
 
@@ -45,7 +73,7 @@ public class CreateCourseContentMigrationOptions extends BaseOptions {
 
     public MigrationType getMigrationType() {
         return migrationType;
-    }
+    }*/
 
     /**
      * If set, only the selected types will be included in the migration.
