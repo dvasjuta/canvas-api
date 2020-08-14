@@ -1,6 +1,8 @@
 package edu.ksu.canvas.impl;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.interfaces.ContentMigrationReader;
@@ -18,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigrationReader, ContentMigrationWriter> implements ContentMigrationReader, ContentMigrationWriter {
@@ -39,7 +42,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 	}
 
 	@Override
-	public Optional<ContentMigration> createCourseContentMigration(int destinationCourseId, ContentMigration contentMigration, CreateCourseContentMigrationOptions options) throws IOException {
+	public Optional<ContentMigration> createCourseContentMigration(int destinationCourseId, ContentMigration contentMigration, CreateCourseContentMigrationOptions options) throws IOException, IllegalArgumentException {
 		LOG.debug("creating course content migration");
 		//
 		if (contentMigration.getMigrationType() == null || !"course_copy_importer".equals(contentMigration.getMigrationType())) {
@@ -52,12 +55,50 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 		if (options != null && options.getOptionsMap().get("select[]") != null) {
 			List<String> types = options.getOptionsMap().get("select[]");
 			contentMigrationJson.addProperty("select[]", String.join(",", types));
+//			contentMigrationJson.addProperty("select", String.join(",", types));
 		}
-		//java.util.logging.Logger.getAnonymousLogger().info("MAP: " + url + " -> JSON: " + contentMigrationJson);
+		java.util.logging.Logger.getAnonymousLogger().info("MAP: " + url + " -> JSON: " + contentMigrationJson);
 		Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, contentMigrationJson);
 		return responseParser.parseToObject(ContentMigration.class, response);
 	}
 
+	@Override
+	public Optional<ContentMigration> updateCourseContentMigration(int destinationCourseId, ContentMigration contentMigration, CreateCourseContentMigrationOptions options) throws IOException, IllegalArgumentException {
+		LOG.debug("update course content migration");
+		//
+		if (contentMigration == null || contentMigration.getId() == null) {
+			throw new IllegalArgumentException("Content migration needs to be initialised with a valid ID");
+		}
+		if (contentMigration.getMigrationType() == null || !"course_copy_importer".equals(contentMigration.getMigrationType())) {
+			throw new IllegalArgumentException("Invalid migration_type '" + contentMigration.getMigrationType() + "'");
+		}
+		String url = buildCanvasUrl("courses/" + destinationCourseId + "/content_migrations/" + contentMigration.getId(), Collections.emptyMap());
+		Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
+		JsonObject contentMigrationJson = gson.toJsonTree(contentMigration).getAsJsonObject();
+
+		/* Test if "waiting_for_select" - if true generate "copy" JSON data. 
+			ie. only uses select[] values so course_settings is NOT available
+
+			eg from Canvas:
+		   "copy":{"all_course_settings":"1", "all_announcements":"1", "all_discussion_topics":"1" }
+		 */
+		if (contentMigration.getSelectiveImport() && StringUtils.equals(contentMigration.getWorkflowState(), "waiting_for_select") 
+			&& options != null && options.getOptionsMap().get("select[]") != null) {
+			
+			java.util.TreeMap<String, Integer> vals = new java.util.TreeMap<>();
+			
+			// from select[] altert to -> "all_" + type: 1
+			for (String type : options.getOptionsMap().get("select[]")) {
+				vals.put("all_" + type, 1);
+			}
+			contentMigrationJson.add("copy", gson.toJsonTree(vals));
+			
+		}
+		java.util.logging.Logger.getAnonymousLogger().info("PUT MAP: " + url + " -> JSON: " + contentMigrationJson);
+		Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, contentMigrationJson);
+		return responseParser.parseToObject(ContentMigration.class, response);
+	}
+	
 	@Override
 	protected Type listType() {
 		return new TypeToken<List<Course>>() {
