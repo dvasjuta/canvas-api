@@ -82,8 +82,9 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			eg from Canvas:
 		   "copy":{"all_course_settings":"1", "all_announcements":"1", "all_discussion_topics":"1" }
 		 */
-		if (contentMigration.getSelectiveImport() && StringUtils.equals(contentMigration.getWorkflowState(), "waiting_for_select") 
-			&& options != null && options.getOptionsMap().get("select[]") != null) {
+		if (StringUtils.equals(contentMigration.getWorkflowState(), "waiting_for_select")
+			&& (contentMigration.getSelectiveImport() != null && contentMigration.getSelectiveImport()) 
+			&& (options != null && options.getOptionsMap().get("select[]") != null)) {
 			
 			java.util.TreeMap<String, Integer> vals = new java.util.TreeMap<>();
 			
@@ -91,8 +92,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			for (String type : options.getOptionsMap().get("select[]")) {
 				vals.put("all_" + type, 1);
 			}
-			contentMigrationJson.add("copy", gson.toJsonTree(vals));
-			
+			contentMigrationJson.add("copy", gson.toJsonTree(vals));			
 		}
 		java.util.logging.Logger.getAnonymousLogger().info("PUT MAP: " + url + " -> JSON: " + contentMigrationJson);
 		Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, contentMigrationJson);
