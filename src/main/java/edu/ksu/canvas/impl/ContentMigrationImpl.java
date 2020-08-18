@@ -57,7 +57,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			contentMigrationJson.addProperty("select[]", String.join(",", types));
 //			contentMigrationJson.addProperty("select", String.join(",", types));
 		}
-		java.util.logging.Logger.getAnonymousLogger().info("MAP: " + url + " -> JSON: " + contentMigrationJson);
+		java.util.logging.Logger.getAnonymousLogger().info("POST MAP: " + url + "\n-> POST JSON: " + contentMigrationJson);
 		Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, contentMigrationJson);
 		return responseParser.parseToObject(ContentMigration.class, response);
 	}
@@ -86,6 +86,9 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			&& (contentMigration.getSelectiveImport() != null && contentMigration.getSelectiveImport()) 
 			&& (options != null && options.getOptionsMap().get("select[]") != null)) {
 			
+			List<String> types = options.getOptionsMap().get("select[]");
+			contentMigrationJson.addProperty("select[]", String.join(",", types));
+
 			java.util.TreeMap<String, Integer> vals = new java.util.TreeMap<>();
 			
 			// from select[] altert to -> "all_" + type: 1
@@ -94,7 +97,7 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			}
 			contentMigrationJson.add("copy", gson.toJsonTree(vals));			
 		}
-		java.util.logging.Logger.getAnonymousLogger().info("PUT MAP: " + url + " -> JSON: " + contentMigrationJson);
+		java.util.logging.Logger.getAnonymousLogger().info("PUT MAP: " + url + "\n-> PUT JSON: " + contentMigrationJson);
 		Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, contentMigrationJson);
 		return responseParser.parseToObject(ContentMigration.class, response);
 	}
