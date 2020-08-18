@@ -83,7 +83,6 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 		   "copy":{"all_course_settings":"1", "all_announcements":"1", "all_discussion_topics":"1" }
 		 */
 		if (StringUtils.equals(contentMigration.getWorkflowState(), "waiting_for_select")
-			&& (contentMigration.getSelectiveImport() != null && contentMigration.getSelectiveImport()) 
 			&& (options != null && options.getOptionsMap().get("select[]") != null)) {
 			
 			List<String> types = options.getOptionsMap().get("select[]");
