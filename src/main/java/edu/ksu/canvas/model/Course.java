@@ -17,6 +17,22 @@ import java.util.Map;
 public class Course extends BaseCanvasModel implements Serializable {
     public static final long serialVersionUID = 1L;
 
+	public enum Event {
+        @SerializedName("claim")
+        CLAIM,
+        @SerializedName("offer")
+        OFFER,
+        @SerializedName("conclude")
+        CONCLUDE,
+        @SerializedName("delete")
+        DELETE,
+        @SerializedName("undelete")
+        UNDELETE;
+					
+        @Override
+        public String toString() { return name().toLowerCase(); }
+    }
+		
     private Integer accountId;
     private String courseCode;
     private String defaultView;
@@ -58,6 +74,8 @@ public class Course extends BaseCanvasModel implements Serializable {
     private List<Enrollment> enrollments;
     private List<UserDisplay> teachers;
     private Map<String, Object> permissions;
+
+	private Event event;
 
     @SerializedName("term")
     private EnrollmentTerm enrollmentTerm;
@@ -429,4 +447,12 @@ public class Course extends BaseCanvasModel implements Serializable {
     public void setPermissions(Map<String, Object> permissions) {
         this.permissions = permissions;
     }
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 }
