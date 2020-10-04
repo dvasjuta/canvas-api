@@ -50,6 +50,14 @@ public class QuizImpl extends BaseImpl<Quiz, QuizReader, QuizWriter> implements 
         return responseParser.parseToObject(Quiz.class, response);
     }
 
+	@Override
+	public Optional<Quiz> createQuiz(Quiz quiz, String courseId) throws IOException {
+        LOG.debug("Creating quiz in course " + courseId);
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes", Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url,quiz.toJsonObject(serializeNulls));
+        return responseParser.parseToObject(Quiz.class, response);		 
+	}
+	
     private List <Quiz> parseQuizList(final List<Response> responses) {
         return responses.stream().
                 map(this::parseQuizList).

@@ -12,7 +12,7 @@ import edu.ksu.canvas.model.BaseCanvasModel;
 import java.io.Serializable;
 import java.util.List;
 
-@CanvasObject(postKey = "quizQuestion")
+@CanvasObject(postKey = "question")
 public class QuizQuestion extends BaseCanvasModel implements Serializable {
     private static final long serialVersionUID = 1L;
 

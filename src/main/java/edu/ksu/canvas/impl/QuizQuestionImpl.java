@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader, QuizQuestionWriter> implements QuizQuestionReader, QuizQuestionWriter {
     private static final Logger LOG = Logger.getLogger(QuizQuestionImpl.class);
@@ -46,6 +47,15 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
         return false;
     }
 
+	@Override
+	public Optional<QuizQuestion> createQuizQuestion(String courseId, QuizQuestion quizQuestion, Integer quizId) throws IOException {
+        LOG.debug("Creating quiz question into " + quizId + " in course " + courseId);
+		java.util.logging.Logger.getAnonymousLogger().info(courseId + "/" + quizId + " " + quizQuestion.toJsonObject(Boolean.FALSE) );
+        String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
+        Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, quizQuestion.toJsonObject(serializeNulls));
+        return responseParser.parseToObject(QuizQuestion.class, response);		 
+	}
+	
     @Override
     protected Type listType() {
         return new TypeToken<List<QuizQuestion>>(){}.getType();
