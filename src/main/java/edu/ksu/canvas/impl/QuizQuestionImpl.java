@@ -50,7 +50,6 @@ public class QuizQuestionImpl extends BaseImpl<QuizQuestion, QuizQuestionReader,
 	@Override
 	public Optional<QuizQuestion> createQuizQuestion(String courseId, QuizQuestion quizQuestion, Integer quizId) throws IOException {
         LOG.debug("Creating quiz question into " + quizId + " in course " + courseId);
-		java.util.logging.Logger.getAnonymousLogger().info(courseId + "/" + quizId + " " + quizQuestion.toJsonObject(Boolean.FALSE) );
         String url = buildCanvasUrl("courses/" + courseId + "/quizzes/" + quizId + "/questions", Collections.emptyMap());
         Response response = canvasMessenger.sendJsonPostToCanvas(oauthToken, url, quizQuestion.toJsonObject(serializeNulls));
         return responseParser.parseToObject(QuizQuestion.class, response);		 
