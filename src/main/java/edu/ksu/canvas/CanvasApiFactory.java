@@ -181,6 +181,7 @@ public class CanvasApiFactory {
         readerMap.put(CustomGradebookColumnReader.class, CustomGradebookColumnImpl.class);
         readerMap.put(CommunicationChannelReader.class, CommunicationChannelImpl.class);
         readerMap.put(CustomGradebookColumnDataReader.class, CustomGradebookColumnDataImpl.class);
+        readerMap.put(QuizQuestionGroupReader.class, QuizQuestionGroupImpl.class);
 
         writerMap.put(AssignmentOverrideWriter.class, AssignmentOverrideImpl.class);
         writerMap.put(AdminWriter.class, AdminImpl.class);
@@ -206,6 +207,7 @@ public class CanvasApiFactory {
         writerMap.put(AccountReportSummaryWriter.class, AccountReportSummaryImpl.class);
         writerMap.put(AccountReportWriter.class, AccountReportImpl.class);
         writerMap.put(ContentMigrationWriter.class, ContentMigrationImpl.class);
+        writerMap.put(QuizQuestionGroupWriter.class, QuizQuestionGroupImpl.class);
 				//
         writerMap.put(GroupWriter.class, GroupImpl.class);
         writerMap.put(GroupCategoryWriter.class, GroupCategoryImpl.class);
