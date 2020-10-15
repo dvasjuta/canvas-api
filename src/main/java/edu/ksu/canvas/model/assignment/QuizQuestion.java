@@ -28,6 +28,8 @@ public class QuizQuestion extends BaseCanvasModel implements Serializable {
     private String neutralComments;
     private List<QuizAnswer> answers;
 
+	private Integer quizGroupId;
+	
     @CanvasField(postKey = "id", array = false)
     public Integer getId() {
         return id;
@@ -126,6 +128,15 @@ public class QuizQuestion extends BaseCanvasModel implements Serializable {
     public void setAnswers(List<QuizAnswer> answers) {
         this.answers = answers;
     }
+
+    @CanvasField(postKey = "quiz_group_id")
+	public Integer getQuizGroupId() {
+		return quizGroupId;
+	}
+
+	public void setQuizGroupId(Integer quizGroupId) {
+		this.quizGroupId = quizGroupId;
+	}
 
     @Override
     public boolean equals(Object o) {
