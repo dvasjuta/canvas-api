@@ -229,6 +229,7 @@ public class Quiz extends BaseCanvasModel implements Serializable {
         this.oneQuestionAtATime = oneQuestionAtATime;
     }
 
+    @CanvasField(postKey = "question_count")
     public Integer getQuestionCount() {
         return questionCount;
     }
