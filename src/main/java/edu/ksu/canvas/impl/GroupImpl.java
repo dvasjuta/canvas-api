@@ -92,7 +92,7 @@ public class GroupImpl extends BaseImpl<Group, GroupReader, GroupWriter> impleme
             throw new IllegalArgumentException("CourseId is not found.");
         }
         Objects.requireNonNull(group.getName(), "name must be set to create a group.");
-        Map<String, List<String>> params = new HashMap<>();
+        //Map<String, List<String>> params = new HashMap<>();
         String url = buildCanvasUrl("group_categories/" + groupCategoryId + "/groups", Collections.emptyMap());
         Gson gson = GsonResponseParser.getDefaultGsonParser(serializeNulls);
         JsonObject groupJson = gson.toJsonTree(group).getAsJsonObject();
