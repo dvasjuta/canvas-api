@@ -211,7 +211,7 @@ public class SimpleRestClient implements RestClient {
         httpDelete.setHeader("Authorization", "Bearer" + " " + token.getAccessToken());
         List<NameValuePair> params = convertParameters(deleteParameters);
 
-        httpDelete.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        httpDelete.setEntity(new UrlEncodedFormEntity(params)); //, "UTF-8"));
         HttpResponse httpResponse = httpClient.execute(httpDelete);
 
         String content = handleResponse(httpResponse, httpDelete);
