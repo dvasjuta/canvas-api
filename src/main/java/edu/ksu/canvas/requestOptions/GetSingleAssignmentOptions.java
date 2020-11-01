@@ -6,6 +6,7 @@ public class GetSingleAssignmentOptions extends BaseOptions {
     
     private String courseId;
     private Integer assignmentId;
+    private String sisAssignmentId;
 
     public enum Include {
         SUBMISSION, ASSIGNMENT_VISIBILITY, OVERRIDES, OBSERVED_USERS;
@@ -23,6 +24,15 @@ public class GetSingleAssignmentOptions extends BaseOptions {
         this.courseId = courseId;
         this.assignmentId = assignmentId;
     }
+    
+	public GetSingleAssignmentOptions(String courseId, String sisAssignmentId) {
+		if (courseId == null || sisAssignmentId == null) {
+			throw new IllegalArgumentException("Course and sis assignment IDs are required");
+		}
+		this.courseId = courseId;
+		this.assignmentId = null;
+		this.sisAssignmentId = sisAssignmentId;
+	}
 
     public String getCourseId() {
         return courseId;
@@ -32,6 +42,10 @@ public class GetSingleAssignmentOptions extends BaseOptions {
         return assignmentId;
     }
 
+    public String getSisAssignmentId() {
+        return sisAssignmentId;
+    }
+    
     /**
      * Associations to include with the assignment. 
      * The “assignment_visibility” option requires that the Differentiated Assignments course feature be turned on.

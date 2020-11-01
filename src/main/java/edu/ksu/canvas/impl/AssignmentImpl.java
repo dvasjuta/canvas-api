@@ -27,7 +27,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
     private static final Logger LOG = Logger.getLogger(AssignmentReader.class);
 
     public AssignmentImpl(String canvasBaseUrl, Integer apiVersion, OauthToken oauthToken, RestClient restClient,
-                          int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
+            int connectTimeout, int readTimeout, Integer paginationPageSize, Boolean serializeNulls) {
         super(canvasBaseUrl, apiVersion, oauthToken, restClient, connectTimeout, readTimeout,
                 paginationPageSize, serializeNulls);
     }
@@ -45,14 +45,20 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
 
     @Override
     public Optional<Assignment> getSingleAssignment(GetSingleAssignmentOptions options) throws IOException {
-        String url = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId(), options.getOptionsMap());
+        String url = "";
+        if (options.getAssignmentId() == null) {
+            url  = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/sis_assignment_id:" + options.getSisAssignmentId(), options.getOptionsMap());
+        } else {
+            url  = buildCanvasUrl("courses/" + options.getCourseId() + "/assignments/" + options.getAssignmentId(), options.getOptionsMap());
+        }
+
         Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
         return responseParser.parseToObject(Assignment.class, response);
     }
 
     @Override
     public Optional<Assignment> createAssignment(String courseId, Assignment assignment) throws IOException {
-        if(StringUtils.isBlank(assignment.getName())) {
+        if (StringUtils.isBlank(assignment.getName())) {
             throw new IllegalArgumentException("Assignment must have a name");
         }
         String url = buildCanvasUrl("courses/" + courseId + "/assignments", Collections.emptyMap());
@@ -67,7 +73,7 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
         String createdUrl = buildCanvasUrl("courses/" + courseId + "/assignments/" + assignmentId, Collections.emptyMap());
         Response response = canvasMessenger.deleteFromCanvas(oauthToken, createdUrl, postParams);
         LOG.debug("response " + response.toString());
-        if(response.getErrorHappened() || response.getResponseCode() != 200){
+        if (response.getErrorHappened() || response.getResponseCode() != 200) {
             LOG.debug("Failed to delete assignment, error message: " + response.toString());
             return Optional.empty();
         }
@@ -83,7 +89,8 @@ public class AssignmentImpl extends BaseImpl<Assignment, AssignmentReader, Assig
 
     @Override
     protected Type listType() {
-        return new TypeToken<List<Assignment>>(){}.getType();
+        return new TypeToken<List<Assignment>>() {
+        }.getType();
     }
 
     @Override
