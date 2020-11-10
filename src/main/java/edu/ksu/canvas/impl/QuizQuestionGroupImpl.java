@@ -154,7 +154,7 @@ public class QuizQuestionGroupImpl extends BaseImpl<QuizQuestionGroup, QuizQuest
 			result.setPickCount(((Double) map.get("pick_count")).intValue());
 		}
 		if (map.containsKey("question_points") && isDoubleValid(map.get("question_points"))) {
-			result.setQuestionPoints(((Double) map.get("question_points")).intValue());
+			result.setQuestionPoints(((Double) map.get("question_points")));
 		}
 		if (map.containsKey("assessment_question_bank_id") && isDoubleValid(map.get("assessment_question_bank_id"))) { // StringUtils.isNotBlank( ((Double) result.get("assessment_question_bank_id")).toString()  ))   {
 			result.setAssessmentQuestionBankId(((Double) map.get("assessment_question_bank_id")).intValue());

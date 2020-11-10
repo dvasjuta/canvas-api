@@ -15,7 +15,7 @@ public class QuizQuestionGroup extends BaseCanvasModel implements Serializable {
     private Integer quizId;
     private String name;
     private Integer pickCount;
-	private Integer questionPoints;
+	private Double questionPoints;
 	private Integer assessmentQuestionBankId;
 	private Integer position;
 	
@@ -65,11 +65,11 @@ public class QuizQuestionGroup extends BaseCanvasModel implements Serializable {
 	}
 
     @CanvasField(postKey = "question_points")//, array = false)
-	public Integer getQuestionPoints() {
+	public Double getQuestionPoints() {
 		return questionPoints;
 	}
 
-	public void setQuestionPoints(Integer questionPoints) {
+	public void setQuestionPoints(Double questionPoints) {
 		this.questionPoints = questionPoints;
 	}
 
