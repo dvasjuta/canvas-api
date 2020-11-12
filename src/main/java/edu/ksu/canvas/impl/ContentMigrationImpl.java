@@ -92,7 +92,13 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			
 			// from select[] altert to -> "all_" + type: 1
 			for (String type : options.getOptionsMap().get("select[]")) {
-				vals.put("all_" + type, 1);
+				if (StringUtils.equals(type, "modules")) {
+						vals.put("all_context_modules", 1);
+				} else if (StringUtils.equals(type, "pages")) {
+						vals.put("all_wiki_pages", 1);
+				} else {
+						vals.put("all_" + type, 1);
+				}
 			}
 			contentMigrationJson.add("copy", gson.toJsonTree(vals));			
 		}
