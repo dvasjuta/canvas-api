@@ -94,15 +94,17 @@ public class ContentMigrationImpl extends BaseImpl<ContentMigration, ContentMigr
 			for (String type : options.getOptionsMap().get("select[]")) {
 				if (StringUtils.equals(type, "modules")) {
 						vals.put("all_context_modules", 1);
+						vals.put("all_modules", 1);
 				} else if (StringUtils.equals(type, "pages")) {
 						vals.put("all_wiki_pages", 1);
+						vals.put("all_pages", 1);
 				} else {
 						vals.put("all_" + type, 1);
 				}
 			}
 			contentMigrationJson.add("copy", gson.toJsonTree(vals));			
 		}
-		java.util.logging.Logger.getAnonymousLogger().info("PUT MAP: " + url + "\n-> PUT JSON: " + contentMigrationJson);
+		java.util.logging.Logger.getAnonymousLogger().info("PUT URL: " + url + "\n-> PUT JSON: " + contentMigrationJson);
 		Response response = canvasMessenger.sendJsonPutToCanvas(oauthToken, url, contentMigrationJson);
 		return responseParser.parseToObject(ContentMigration.class, response);
 	}
