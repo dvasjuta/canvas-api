@@ -1,5 +1,6 @@
 package edu.ksu.canvas.impl;
 
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.ksu.canvas.constants.CanvasConstants;
 import edu.ksu.canvas.exception.InvalidOauthTokenException;
@@ -10,6 +11,7 @@ import edu.ksu.canvas.net.Response;
 import edu.ksu.canvas.net.RestClient;
 import edu.ksu.canvas.oauth.OauthToken;
 import edu.ksu.canvas.requestOptions.CreateUserOptions;
+import edu.ksu.canvas.requestOptions.GetUserCustomDataOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInAccountOptions;
 import edu.ksu.canvas.requestOptions.GetUsersInCourseOptions;
 
@@ -87,6 +89,24 @@ public class UserImpl extends BaseImpl<User, UserReader, UserWriter> implements 
         LOG.debug("Retrieving users for account " + options.getAccountId());
         String url = buildCanvasUrl("accounts/" + options.getAccountId() + "/users", options.getOptionsMap());
         return getListFromCanvas(url);
+    }
+    
+    @Override
+    public Optional<String> getUserCustomData(GetUserCustomDataOptions options) throws IOException {
+	if(options.getUserId() == null || options.getUserId() == 0) {
+            throw new IllegalArgumentException("User to update must not be null and have a Canvas ID assigned");
+        }
+        LOG.debug("Geting custom data for user in Canvas: " + options.getUserId());
+	String baseUrl = "users/" + String.valueOf(options.getUserId()) + "/custom_data";
+	baseUrl += (options.getScope() != null && options.getScope().length() > 0) ? "/"+options.getScope() : "";
+        String url = buildCanvasUrl(baseUrl, options.getOptionsMap());
+	Response response = canvasMessenger.getSingleResponseFromCanvas(oauthToken, url);
+        return Optional.ofNullable(parseCustomData(response));
+    }
+    
+    private String parseCustomData(final Response response) {
+        JsonObject jsonObject = GsonResponseParser.getDefaultGsonParser(serializeNulls).fromJson(response.getContent(), JsonObject.class);
+        return (!jsonObject.get("data").isJsonNull()) ? jsonObject.get("data").getAsJsonObject().toString() : null;
     }
 
     @Override
